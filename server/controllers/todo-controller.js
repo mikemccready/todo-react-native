@@ -25,4 +25,14 @@ todoController.getTodos = (req, res) => {
 	})
 }
 
+todoController.updateTodo = (req, res) => {
+	const todoId = req.params.id;
+	Todo.findByIdAndUpdate(todoId, req.body, {new: true}, (err, todo) => {
+		if (err) return console.error(err);
+		res.status(200);
+		res.setHeader('Content-Type', 'application/json');
+		return res.send(todo).end();
+	})
+}
+
 module.exports = todoController;
