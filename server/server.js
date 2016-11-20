@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const todoController = require('./controllers/todo-controller');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -22,9 +23,7 @@ app.get('/api/todos', (req, res) => {
 	res.send({task: 'myTodos'})
 });
 
-app.post('/api/todos', (req, res) => {
-	console.log(req.body)
-});
+app.post('/api/todos', todoController.createTodo);
 
 app.listen(PORT, () => {
 	console.log('listening port 3000..')
