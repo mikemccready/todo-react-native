@@ -19,10 +19,7 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname + './../index.html'));
 });
 
-app.get('/api/todos', (req, res) => {
-	res.send({task: 'myTodos'})
-});
-
+app.get('/api/todos', todoController.getTodos);
 app.post('/api/todos', todoController.createTodo);
 
 app.listen(PORT, () => {
