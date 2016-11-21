@@ -4,6 +4,38 @@
 	<title>rectdo-native</title>
 </head>
 <body>
+	<div id="container">Loading...</div>
+
+<script>
+
+function getTodos() {
+	fetch('http://localhost:3000/api/todos')
+	.then(response => {
+		if (response.status !== 200) {
+			console.log('Error', response.status);
+			return;
+		}
+		response.json().then(todoData => { 
+			render(todoData);
+		})
+	})
+}
+
+function render(todoData) {
+	console.log(todoData);
+	const todoContainer = document.getElementById('container');
+	todoData.map(todo => {
+		let todoDiv = document.createElement('div');
+		todoDiv.innerHTML = todo.task;
+		todoContainer.appendChild(todoDiv);
+	})
+}
+
+getTodos();
+
+
+
+</script>
 
 </body>
 </html>
