@@ -4,9 +4,32 @@
 	<title>rectdo-native</title>
 </head>
 <body>
+	<form>
+		<input id="todoInput" type="text" placeholder="What do you have to do?" />
+		<input id="createTodoButton" type="submit" value="Add" />
+	</form>
 	<div id="container">Loading...</div>
 
 <script>
+
+function attachEventListener() {
+	const submitButton = document.getElementById('createTodoButton');
+	submitButton.addEventListener('click', addTodo)
+}
+
+function addTodo(e) {
+	e.preventDefault();
+	const todoInput = document.getElementById('todoInput').value;
+	let XHR = new XMLHttpRequest();
+	XHR.onreadystatechange = () => {
+		if (XHR.readyState === 4 && XHR.status === 200) {
+			getTodos();
+		}
+	}
+	XHR.open('POST', 'http://localhost:3000/api/todos');
+	XHR.setRequestHeader('Content-Type', 'application/json');
+	XHR.send(JSON.stringify({task: todoInput}));
+}
 
 function getTodos() {
 	fetch('http://localhost:3000/api/todos')
@@ -22,8 +45,8 @@ function getTodos() {
 }
 
 function render(todoData) {
-	console.log(todoData);
 	const todoContainer = document.getElementById('container');
+	todoContainer.innerHTML = '';
 	todoData.map(todo => {
 		let todoDiv = document.createElement('div');
 		todoDiv.innerHTML = todo.task;
@@ -32,7 +55,7 @@ function render(todoData) {
 }
 
 getTodos();
-
+attachEventListener();
 
 
 </script>
