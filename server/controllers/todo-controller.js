@@ -14,7 +14,7 @@ todoController.createTodo = (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
 		return res.send(JSON.stringify(newTodo)).end();
 	});
-};
+}
 
 todoController.getTodos = (req, res) => {
 	Todo.find({}, (err, todos) => {
@@ -32,6 +32,15 @@ todoController.updateTodo = (req, res) => {
 		res.status(200);
 		res.setHeader('Content-Type', 'application/json');
 		return res.send(todo).end();
+	})
+}
+
+todoController.deleteTodo = (req, res) => {
+	const todoId = req.params.id;
+	Todo.remove({_id: todoId}, (err) => {
+		if (err) return console.error(err);
+		res.status(200);
+		return res.send('deleted todo').end();
 	})
 }
 
