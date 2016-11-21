@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 app.get('/api/todos', todoController.getTodos);
 app.post('/api/todos', todoController.createTodo);
 app.put('/api/todo/:id', todoController.updateTodo);
+app.delete('/api/todo/:id', todoController.deleteTodo);
 
 app.listen(PORT, () => {
 	console.log('listening port 3000..')
